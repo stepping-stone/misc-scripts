@@ -101,7 +101,7 @@ function main ()
         (( hookCounter++ ))
     done
 
-    info "Executed ${hookCounter} hook script(s)"
+    info "Successfully executed ${hookCounter} hook script(s)"
 }
 
 
