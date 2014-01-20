@@ -41,10 +41,18 @@ LIB_DIR=${LIB_DIR:="$(dirname $(readlink -f ${0}))/../../../share/stepping-stone
 
 SYSLOG_TAG="${SYSLOG_TAG:="ucarp-hook"}"
 
-IP_CMD="${IP_CMD:="/bin/ip"}"
-
 source "${LIB_DIR}/input-output.lib.sh"
 
+
+IP_CMD="${IP_CMD:="/bin/ip"}"
+
+if ! test -x "${IP_CMD}"; then
+    IP_CMD="/sbin/ip"
+
+    if ! test -x "${IP_CMD}"; then
+        die "Missing ip command: '${IP_CMD}'"
+    fi
+fi
 
 
 function vipUp ()
