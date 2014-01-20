@@ -65,6 +65,11 @@ function getHostChainPrefix ()
         echo "${UCARP_HOOK_HOST_CHAIN_PREFIX}"
     else
         local name="$( hostname )"
+
+	# dirty hack to support test nodes (named vm-test-xy) with the same
+	# chain names as the live-nodes (named vm-node-xy).
+	name=${name/#vm-test/vm-node} # replace vm-test-xy with vm-node-xy
+
         echo "${name//-/_}" # substitute dashes with underscores
     fi
 }
