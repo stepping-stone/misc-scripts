@@ -1,7 +1,7 @@
 #!/bin/sh
- 
-# Bring up the virtual IP address
-/sbin/ip addr add "$2"/"$3" dev "$1"
 
-# Start apache
-/etc/init.d/apache2 start
+# Call the UCARP hook-script dispatcher with the up event
+# $1: device name, such as 'eth0'
+# $2: virtual IP address, such as '192.0.2.10'
+# $3: prefix length, such as '24' 
+/usr/libexec/ucarp-hooks/ucarp-hook-dispatcher.sh up pub "$1" "$2" "$3"
