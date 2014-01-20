@@ -118,8 +118,11 @@ function netfilterUp ()
     ${IPTABLES_CMD} -I check_lo_out -d ${ip}/32 -j g_${ifAlias}_out
     ${IPTABLES_CMD} -I check_${ifAlias}_in -s ${ip}/32 -j drop_src
      
-    ${IPTABLES_CMD} -I g_${ifAlias}_in  -d ${ip}/32 -j ${chainPrefix}_pub_in
-    ${IPTABLES_CMD} -I g_${ifAlias}_out -s ${ip}/32 -j ${chainPrefix}_pub_out
+    ${IPTABLES_CMD} -I g_${ifAlias}_in  -d ${ip}/32 \
+                    -j ${chainPrefix}_${ifAlias}_in
+
+    ${IPTABLES_CMD} -I g_${ifAlias}_out -s ${ip}/32 \
+                    -j ${chainPrefix}_${ifAlias}_out
      
     ${IPTABLES_CMD} -I ${chainPrefix}_${ifAlias}_in  -s ${ip}/32 -j ACCEPT
     ${IPTABLES_CMD} -I ${chainPrefix}_${ifAlias}_out -d ${ip}/32 -j ACCEPT
@@ -137,13 +140,16 @@ function netfilterDown ()
 
     ${IPTABLES_CMD} -D check_lo_in  -s ${ip}/32 -j g_${ifAlias}_in
     ${IPTABLES_CMD} -D check_lo_out -d ${ip}/32 -j g_${ifAlias}_out
-    ${IPTABLES_CMD} -D check_pub_in -s ${ip}/32 -j drop_src
+    ${IPTABLES_CMD} -D check_${ifAlias}_in -s ${ip}/32 -j drop_src
      
-    ${IPTABLES_CMD} -D g_${ifAlias}_in  -d ${ip}/32 -j ${chainPrefix}_pub_in
-    ${IPTABLES_CMD} -D g_${ifAlias}_out -s ${ip}/32 -j ${chainPrefix}_pub_out
+    ${IPTABLES_CMD} -D g_${ifAlias}_in  -d ${ip}/32 \
+                    -j ${chainPrefix}_${ifAlias}_in
+
+    ${IPTABLES_CMD} -D g_${ifAlias}_out -s ${ip}/32 \
+                    -j ${chainPrefix}_${ifAlias}_out
      
-    ${IPTABLES_CMD} -D ${chainPrefix}_pub_in  -s ${ip}/32 -j ACCEPT
-    ${IPTABLES_CMD} -D ${chainPrefix}_pub_out -d ${ip}/32 -j ACCEPT
+    ${IPTABLES_CMD} -D ${chainPrefix}_${ifAlias}_in  -s ${ip}/32 -j ACCEPT
+    ${IPTABLES_CMD} -D ${chainPrefix}_${ifAlias}_out -d ${ip}/32 -j ACCEPT
 }
 
 function main ()
