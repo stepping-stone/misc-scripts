@@ -85,7 +85,8 @@ function main ()
     test -d "${hookDir}" || die "Missing hook directory: ${hookDir}"
 
 
-    info "Executing hook script(s) for ${device}:${ip}/${prefix}"
+    info "Dispatching UCARP '${action}' action for ${device}:${ip}/${prefix}"
+    info "Executing hook script(s) from ${hookDir}"
 
     local hookCounter=0
 
@@ -102,6 +103,7 @@ function main ()
     done
 
     info "Successfully executed ${hookCounter} hook script(s)"
+    info "UCARP '${action}' action dispatching for ${device}:${ip}/${prefix} done"
 }
 
 
