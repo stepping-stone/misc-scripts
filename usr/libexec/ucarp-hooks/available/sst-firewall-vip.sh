@@ -44,7 +44,6 @@ LIB_DIR=${LIB_DIR:="$(dirname $(readlink -f ${0}))/../../../share/stepping-stone
 
 SYSLOG_TAG="${SYSLOG_TAG:="ucarp-hook"}"
 
-echo "${LIB_DIR}/iptables.lib.sh" > /tmp/out.txt
 source "${LIB_DIR}/iptables.lib.sh"
 
 function isFirewallStarted()
